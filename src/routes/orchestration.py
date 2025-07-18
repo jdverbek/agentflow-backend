@@ -4,13 +4,27 @@ Handles complex task delegation with REAL multi-agent coordination
 """
 from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
-from orchestration.real_manager_agent_v3 import RealManagerAgentV3
+from orchestration.production_manager_agent import ProductionManagerAgent
 import json
 import time
 import threading
 
 orchestration_bp = Blueprint('orchestration', __name__)
-manager = RealManagerAgentV3()
+manager = ProductionManagerAgent()
+
+@orchestration_bp.route('/health', methods=['GET'])
+@cross_origin()
+def get_health():
+    """Get health status of the orchestration system"""
+    try:
+        health_status = manager.get_health_status()
+        return jsonify(health_status), 200
+    except Exception as e:
+        return jsonify({
+            "status": "ERROR",
+            "error": str(e),
+            "timestamp": time.time()
+        }), 500
 
 @orchestration_bp.route('/execute', methods=['POST'])
 def execute_complex_task():
