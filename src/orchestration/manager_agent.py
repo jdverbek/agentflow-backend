@@ -37,7 +37,7 @@ class SubTask:
     dependencies: List[str]  # IDs of tasks that must complete first
     status: TaskStatus
     result: Optional[Dict[str, Any]] = None
-    feedback: Optional[str] = None
+    feedback: Optional[str] = ""  # Initialize with empty string instead of None
     iteration: int = 0
     max_iterations: int = 3
 
