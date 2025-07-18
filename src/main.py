@@ -22,18 +22,21 @@ if database_url:
         from src.models.user import User
         from src.models.agent import Agent
         from src.models.workflow import Workflow
+        
+        # Import and register blueprints
         from src.routes.user import user_bp
         from src.routes.agent import agent_bp
         from src.routes.workflow import workflow_bp
         from src.routes.llm import llm_bp
         from src.routes.tools import tools_bp
+        from src.routes.agent_execute import agent_execute_bp
         
-        # Register blueprints
         app.register_blueprint(user_bp, url_prefix='/api')
         app.register_blueprint(agent_bp, url_prefix='/api')
         app.register_blueprint(workflow_bp, url_prefix='/api')
         app.register_blueprint(llm_bp, url_prefix='/api/llm')
         app.register_blueprint(tools_bp, url_prefix='/api/tools')
+        app.register_blueprint(agent_execute_bp)
         
         # Create tables
         with app.app_context():
@@ -48,8 +51,11 @@ if database_url:
 if not database_url:
     from src.routes.llm import llm_bp
     from src.routes.tools import tools_bp
+    from src.routes.agent_execute import agent_execute_bp
+    
     app.register_blueprint(llm_bp, url_prefix='/api/llm')
     app.register_blueprint(tools_bp, url_prefix='/api/tools')
+    app.register_blueprint(agent_execute_bp)
     
     agents = []
     workflows = []
@@ -88,3 +94,4 @@ if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
     debug = os.environ.get('FLASK_DEBUG', '0') == '1'
     app.run(host='0.0.0.0', port=port, debug=debug)
+
