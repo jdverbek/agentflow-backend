@@ -25,11 +25,15 @@ if database_url:
         from src.routes.user import user_bp
         from src.routes.agent import agent_bp
         from src.routes.workflow import workflow_bp
+        from src.routes.llm import llm_bp
+        from src.routes.tools import tools_bp
         
         # Register blueprints
         app.register_blueprint(user_bp, url_prefix='/api')
         app.register_blueprint(agent_bp, url_prefix='/api')
         app.register_blueprint(workflow_bp, url_prefix='/api')
+        app.register_blueprint(llm_bp, url_prefix='/api/llm')
+        app.register_blueprint(tools_bp, url_prefix='/api/tools')
         
         # Create tables
         with app.app_context():
@@ -42,6 +46,11 @@ if database_url:
 
 # If no database, use simple in-memory storage
 if not database_url:
+    from src.routes.llm import llm_bp
+    from src.routes.tools import tools_bp
+    app.register_blueprint(llm_bp, url_prefix='/api/llm')
+    app.register_blueprint(tools_bp, url_prefix='/api/tools')
+    
     agents = []
     workflows = []
     executions = []
