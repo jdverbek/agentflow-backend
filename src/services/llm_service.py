@@ -14,7 +14,11 @@ class LLMService:
         # Initialize OpenAI
         openai_key = os.environ.get('OPENAI_API_KEY')
         if openai_key:
-            self.openai_client = openai.OpenAI(api_key=openai_key)
+            try:
+                self.openai_client = openai.OpenAI(api_key=openai_key)
+            except Exception as e:
+                print(f"Failed to initialize OpenAI client: {e}")
+                self.openai_client = None
         
         # Initialize Grok
         self.grok_api_key = os.environ.get('GROK_API_KEY')
