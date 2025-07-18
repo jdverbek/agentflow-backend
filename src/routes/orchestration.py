@@ -4,13 +4,13 @@ Handles complex task delegation with REAL multi-agent coordination
 """
 from flask import Blueprint, request, jsonify
 from flask_cors import cross_origin
-from ..orchestration.real_manager_agent import RealManagerAgent
+from ..orchestration.real_manager_agent_v2 import RealManagerAgentV2
 import json
 import time
 import threading
 
 orchestration_bp = Blueprint('orchestration', __name__)
-manager_agent = RealManagerAgent()
+manager_agent = RealManagerAgentV2()
 
 @orchestration_bp.route('/execute', methods=['POST'])
 def execute_complex_task():
