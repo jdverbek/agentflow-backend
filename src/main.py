@@ -30,6 +30,7 @@ if database_url:
         from src.routes.llm import llm_bp
         from src.routes.tools import tools_bp
         from src.routes.agent_execute import agent_execute_bp
+        from src.routes.orchestration import orchestration_bp
         
         app.register_blueprint(user_bp, url_prefix='/api')
         app.register_blueprint(agent_bp, url_prefix='/api')
@@ -37,6 +38,7 @@ if database_url:
         app.register_blueprint(llm_bp, url_prefix='/api/llm')
         app.register_blueprint(tools_bp, url_prefix='/api/tools')
         app.register_blueprint(agent_execute_bp)
+        app.register_blueprint(orchestration_bp)
         
         # Create tables
         with app.app_context():
@@ -52,10 +54,12 @@ if not database_url:
     from src.routes.llm import llm_bp
     from src.routes.tools import tools_bp
     from src.routes.agent_execute import agent_execute_bp
+    from src.routes.orchestration import orchestration_bp
     
     app.register_blueprint(llm_bp, url_prefix='/api/llm')
     app.register_blueprint(tools_bp, url_prefix='/api/tools')
     app.register_blueprint(agent_execute_bp)
+    app.register_blueprint(orchestration_bp)
     
     agents = []
     workflows = []
