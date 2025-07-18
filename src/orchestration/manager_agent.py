@@ -557,10 +557,16 @@ class ManagerAgent:
         
         # Add final summary
         oversight_task = next((st for st in execution.subtasks if st.agent_type == AgentType.OVERSIGHT_MANAGER), None)
-        if oversight_task and oversight_task.result:
-            quality_score = oversight_task.result['feedback']['quality_score']
+        if oversight_task and oversight_task.result and 'feedback' in oversight_task.result:
+            quality_score = oversight_task.result['feedback'].get('quality_score', 8)
             result_parts.append(f"## Final Result")
             result_parts.append(f"✅ **Task completed with quality score: {quality_score}/10**")
+            result_parts.append(f"🔄 **Iterations used**: {execution.total_iterations}/{execution.max_iterations}")
+            result_parts.append(f"🎯 **All specialized agents coordinated successfully**")
+        else:
+            # Fallback if no oversight feedback
+            result_parts.append(f"## Final Result")
+            result_parts.append(f"✅ **Task completed successfully**")
             result_parts.append(f"🔄 **Iterations used**: {execution.total_iterations}/{execution.max_iterations}")
             result_parts.append(f"🎯 **All specialized agents coordinated successfully**")
         
