@@ -2,15 +2,13 @@
 Orchestration API Routes - Manager Agent Endpoints
 Handles complex task delegation and multi-agent coordination
 """
-
 from flask import Blueprint, request, jsonify
-import time
-import threading
-from src.orchestration.manager_agent import manager_agent, TaskStatus
+from flask_cors import cross_origin
+from ..orchestration.manager_agent_enhanced import EnhancedManagerAgent
+import json
 
 orchestration_bp = Blueprint('orchestration', __name__)
-
-# Store for async task execution
+manager_agent = EnhancedManagerAgent()
 async_executions = {}
 
 @orchestration_bp.route('/api/orchestration/execute', methods=['POST'])

@@ -6,6 +6,7 @@ Intelligently delegates tasks to specialized sub-agents and coordinates their wo
 import json
 import time
 import uuid
+import requests
 from typing import Dict, List, Any, Optional
 from dataclasses import dataclass, asdict
 from enum import Enum
@@ -61,6 +62,7 @@ class ManagerAgent:
     
     def __init__(self):
         self.active_executions: Dict[str, TaskExecution] = {}
+        self.progress_api_url = "http://localhost:5000"  # Will be updated for production
         self.agent_capabilities = {
             AgentType.RESEARCH_ANALYST: {
                 "models": ["o3-pro", "grok-4-heavy"],
