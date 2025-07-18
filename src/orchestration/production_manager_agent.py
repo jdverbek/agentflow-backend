@@ -9,6 +9,9 @@ import logging
 from datetime import datetime
 from typing import Dict, List, Any, Optional
 
+# Import error handling
+from utils.error_handler import task_error_handler, ai_error_handler, env_error_handler
+
 # Configure logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -109,6 +112,28 @@ class ProductionManagerAgent:
         }
     
     def execute_task(self, task: str, max_iterations: int = 3) -> Dict[str, Any]:
+        """Execute task with real AI processing and comprehensive error handling"""
+        
+        # Use error handler for robust execution
+        def task_execution():
+            return self._execute_task_internal(task, max_iterations)
+        
+        # Execute with comprehensive error recovery
+        result = task_error_handler.execute_with_recovery(task_execution, task=task, max_iterations=max_iterations)
+        
+        if result["success"]:
+            return result["result"]
+        else:
+            # Return error response with recovery details
+            return {
+                "success": False,
+                "error": result["error"],
+                "recovery_attempted": result["recovery_attempted"],
+                "recovery_details": result.get("recovery_details", {}),
+                "validation": "EXECUTION_FAILED_WITH_RECOVERY"
+            }
+    
+    def _execute_task_internal(self, task: str, max_iterations: int = 3) -> Dict[str, Any]:
         """Execute task with real AI processing"""
         execution_id = f"exec_{int(time.time())}"
         start_time = time.time()
