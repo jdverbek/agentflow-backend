@@ -39,7 +39,7 @@ if database_url:
         app.register_blueprint(llm_bp, url_prefix='/api/llm')
         app.register_blueprint(tools_bp, url_prefix='/api/tools')
         app.register_blueprint(agent_execute_bp)
-        app.register_blueprint(orchestration_bp)
+        app.register_blueprint(orchestration_bp, url_prefix='/api/orchestration')
         app.register_blueprint(progress_bp)
         
         # Create tables
@@ -62,7 +62,7 @@ if not database_url:
     app.register_blueprint(llm_bp, url_prefix='/api/llm')
     app.register_blueprint(tools_bp, url_prefix='/api/tools')
     app.register_blueprint(agent_execute_bp)
-    app.register_blueprint(orchestration_bp)
+    app.register_blueprint(orchestration_bp, url_prefix='/api/orchestration')
     app.register_blueprint(progress_bp)
     
     agents = []
