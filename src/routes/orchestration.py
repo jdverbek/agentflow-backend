@@ -186,7 +186,7 @@ class FixedManagerAgent:
             comprehensive_logger.logger.info("📞 Making test API call to OpenAI...")
             
             response = client.chat.completions.create(
-                model="gpt-4o-mini",
+                model="gpt-4.1-mini",
                 messages=[{"role": "user", "content": "Say 'test successful'"}],
                 max_tokens=10
             )
@@ -469,7 +469,7 @@ class FixedManagerAgent:
         try:
             comprehensive_logger.logger.info(f"📞 Making API call to {client_name} for task analysis")
             
-            model = "gpt-4o-mini" if client_name == "openai" else "grok-beta"
+            model = "gpt-4.1-mini" if client_name == "openai" else "grok-beta"
             
             response = client.chat.completions.create(
                 model=model,
@@ -512,7 +512,7 @@ class FixedManagerAgent:
         try:
             comprehensive_logger.logger.info(f"📞 Making API call to {client_name} for content generation")
             
-            model = "gpt-4o-mini" if client_name == "openai" else "grok-beta"
+            model = "gpt-4.1-mini" if client_name == "openai" else "grok-beta"
             
             response = client.chat.completions.create(
                 model=model,
@@ -555,7 +555,7 @@ class FixedManagerAgent:
         try:
             comprehensive_logger.logger.info(f"📞 Making API call to {client_name} for quality review")
             
-            model = "gpt-4o-mini" if client_name == "openai" else "grok-beta"
+            model = "gpt-4.1-mini" if client_name == "openai" else "grok-beta"
             
             response = client.chat.completions.create(
                 model=model,
