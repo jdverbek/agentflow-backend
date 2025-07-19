@@ -11,8 +11,16 @@ openai==1.58.0
 httpx==0.27.2
 requests==2.32.3
 python-dateutil==2.9.0
-
-
 fpdf2==2.8.3
 python-pptx==1.0.2
+
+# New improved dependencies
+crewai>=0.30.0
+langchain>=0.0.300
+langchain-openai>=0.0.5
+langchain-xai>=0.0.1  # FIXED: For ChatXAI Grok-4 integration
+e2b-code-interpreter>=0.12.0  # Optional for secure sandboxing
+restrictedpython>=8.0  # Fallback sandbox
+pydantic-settings>=2.0.0
+pytest>=7.0.0  # For improved testing.2
 
