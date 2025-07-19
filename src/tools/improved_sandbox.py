@@ -2,7 +2,7 @@
 Improved sandbox execution tool with E2B integration and RestrictedPython fallback.
 Integrates with existing AgentFlow tools while adding secure code execution.
 """
-from crewai_tools import BaseTool
+from crewai.tools import BaseTool
 from typing import Type
 from pydantic import BaseModel, Field
 import os
