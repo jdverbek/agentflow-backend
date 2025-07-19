@@ -7,8 +7,8 @@ import time
 import threading
 import logging
 
-# Import the bulletproof manager agent
-from src.orchestration.bulletproof_manager_agent import BulletproofManagerAgent
+# Import the real deliverable manager agent
+from src.orchestration.real_deliverable_manager_agent import RealDeliverableManagerAgent
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,9 +24,9 @@ def get_manager_agent():
     """Get or create manager agent instance"""
     global manager_agent
     if manager_agent is None:
-        logger.info("🔧 Initializing Bulletproof Manager Agent...")
-        manager_agent = BulletproofManagerAgent()
-        logger.info("✅ Bulletproof Manager Agent initialized")
+        logger.info("🔧 Initializing Real Deliverable Manager Agent...")
+        manager_agent = RealDeliverableManagerAgent()
+        logger.info("✅ Real Deliverable Manager Agent initialized")
     return manager_agent
 
 @orchestration_bp.route('/health', methods=['GET'])
@@ -75,5 +75,67 @@ def execute_task():
             "success": False,
             "error": str(e),
             "validation": "ENDPOINT_EXECUTION_FAILED"
+        }), 500
+
+
+
+@orchestration_bp.route('/deliverables', methods=['GET'])
+def list_deliverables():
+    """List all created deliverable files"""
+    try:
+        agent = get_manager_agent()
+        files_info = agent.list_created_files()
+        
+        return jsonify({
+            "success": True,
+            "files": files_info,
+            "total_files": len(files_info),
+            "deliverables_directory": agent.get_deliverables_directory()
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to list deliverables: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+@orchestration_bp.route('/deliverables/info', methods=['GET'])
+def deliverables_info():
+    """Get information about the deliverables system"""
+    try:
+        agent = get_manager_agent()
+        info = agent.deliverable_creator.get_deliverables_info()
+        
+        return jsonify({
+            "success": True,
+            "deliverables_info": info
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to get deliverables info: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
+        }), 500
+
+@orchestration_bp.route('/execution-history', methods=['GET'])
+def execution_history():
+    """Get execution history with deliverable creation details"""
+    try:
+        agent = get_manager_agent()
+        history = agent.get_execution_history()
+        
+        return jsonify({
+            "success": True,
+            "execution_history": history,
+            "total_executions": len(history)
+        }), 200
+        
+    except Exception as e:
+        logger.error(f"❌ Failed to get execution history: {e}")
+        return jsonify({
+            "success": False,
+            "error": str(e)
         }), 500
 
