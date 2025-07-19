@@ -7,8 +7,8 @@ import time
 import threading
 import logging
 
-# Import the real deliverable manager agent
-from src.orchestration.real_deliverable_manager_agent import RealDeliverableManagerAgent
+# Import the fast manager agent
+from src.orchestration.fast_manager_agent import FastManagerAgent
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -24,9 +24,9 @@ def get_manager_agent():
     """Get or create manager agent instance"""
     global manager_agent
     if manager_agent is None:
-        logger.info("🔧 Initializing Real Deliverable Manager Agent...")
-        manager_agent = RealDeliverableManagerAgent()
-        logger.info("✅ Real Deliverable Manager Agent initialized")
+        logger.info("⚡ Initializing Fast Manager Agent...")
+        manager_agent = FastManagerAgent()
+        logger.info("✅ Fast Manager Agent initialized")
     return manager_agent
 
 @orchestration_bp.route('/health', methods=['GET'])
