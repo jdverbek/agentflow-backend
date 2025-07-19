@@ -16,6 +16,7 @@ python-pptx==1.0.2
 
 # New improved dependencies
 crewai>=0.30.0,<1.0.0  # Stable version range
+crewai-tools>=0.1.0,<1.0.0  # ADDED: For BaseTool compatibility
 langchain>=0.0.300,<1.0.0
 langchain-openai>=0.0.5,<1.0.0
 langchain-xai>=0.0.1,<1.0.0  # FIXED: For ChatXAI Grok-4 integration
